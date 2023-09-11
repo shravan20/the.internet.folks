@@ -2,11 +2,11 @@ class CustomError extends Error {
   constructor(message, statusCode) {
     // super(message);
     if (Array.isArray(message)) {
-      super(message.join('\n')); 
+      super(message.join('\n'));
       this.message = message;
     } else {
       super(message);
-      this.message = [message];
+      this.message = message;
     }
     this.name = this.constructor.name;
     this.statusCode = statusCode || 500;

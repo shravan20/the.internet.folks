@@ -1,9 +1,30 @@
-const repository = require('./user.repository');
-const bcrypt = require('bcrypt');
+const { BadRequestError } = require("../../models/error");
+const repository = require("./user.repository");
+const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
+
+// Current time + 1hr
+let addedTimestamp = Math.floor(Date.now() / 1000) + (60 * 60);
 
 async function signin(data) {
     try {
-        return await repository.createUser(data);
+        let user = await repository.findOne({ email: data.email }, { password: 0 });
+        if (!user) {
+            throw new BadRequestError("The credentials you provided are invalid.")
+        }
+
+        let response = {
+            id: user._id,
+            name: user.name,
+            email: user.email,
+        }
+
+        return {
+            data: response,
+            meta: {
+                "access_token": jwtGenerator(user.id)
+            }
+        }
     } catch (error) {
         throw error;
     }
@@ -11,7 +32,21 @@ async function signin(data) {
 
 async function signup(data) {
     try {
-        return await repository.createUser(data);
+
+        let user = await repository.findOne({ email: data.email }, { password: 0 });
+
+        if (user) {
+            throw new BadRequestError("User with this email address already exists.");
+        }
+        data.password = await hashPassword(data.password)
+        let newUser = await repository.createUser(data);
+
+        return {
+            data: newUser,
+            meta: {
+                "access_token": jwtGenerator(newUser.id)
+            }
+        }
     } catch (error) {
         throw error;
     }
@@ -27,7 +62,17 @@ async function hashPassword(plainTextPassword) {
     }
 }
 
+/**
+ * TODO: Move these to middlewares
+ */
+
+function jwtGenerator(payload) {
+    return jwt.sign({
+        data: payload, exp: addedTimestamp,
+    }, process.env.JWT_SECRET);
+}
+
 module.exports = {
     signin,
-    signup,
+    signup
 };

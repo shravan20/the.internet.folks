@@ -14,7 +14,8 @@ async function signup(request, response, next) {
             throw new BadRequestError(validation.errors.all());
         }
 
-        response.success(validation.errors.all());
+        let data = await service.signup(request.body)
+        response.success(data);
     } catch (error) {
         response.error(error);
     }
@@ -22,13 +23,29 @@ async function signup(request, response, next) {
 
 async function signin(request, response, next) {
     try {
-        return response.success(await service.signin());
+
+        let rules = {
+            "email": "required|email",
+            "password": "required|min:6|alpha_num"
+        }
+
+        let validation = new Validator(request.body, rules);
+        if (validation.fails()) {
+            throw new BadRequestError(validation.errors.all());
+        }
+
+        return response.success(await service.signin(request.body));
     } catch (error) {
         response.error(error);
     }
 }
 
+async function me() {
+    return response.success({ a: 1 });
+}
+
 module.exports = {
     signin,
     signup,
+    me
 };
