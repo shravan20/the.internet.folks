@@ -40,8 +40,8 @@ async function signin(request, response, next) {
     }
 }
 
-async function me() {
-    return response.success({ a: 1 });
+async function me(request, response, next) {
+    response.success(await service.getUser(request.uid));
 }
 
 module.exports = {

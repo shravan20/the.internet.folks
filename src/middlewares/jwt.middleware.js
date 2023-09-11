@@ -2,7 +2,7 @@ const jwt = require("jsonwebtoken");
 const { UnauthorizedError } = require("../models/error");
 const tokenVerification = (req, res, next) => {
 
-    let bearerToken = req.authorization
+    let bearerToken = req['headers']['authorization']
 
     if (!bearerToken) {
         res.error(new UnauthorizedError("You need to sign in to proceed."));
@@ -15,12 +15,13 @@ const tokenVerification = (req, res, next) => {
     }
 
     try {
-        jwt.verify(tokenParts[2], process.env.JWT_SECRET)
+        let payload = jwt.verify(tokenParts[1], process.env.JWT_SECRET);
+        req.uid = payload.data;
+        next();
     } catch (error) {
+        console.log(error)
         res.error(new UnauthorizedError("You need to sign in to proceed."));
     }
-
-    next();
 }
 
 module.exports = {

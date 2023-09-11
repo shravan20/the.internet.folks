@@ -3,12 +3,12 @@ const express = require("express");
 const app = express();
 const port = process.env.PORT || 4000;
 const connectToDatabase = require("./src/configs/database");
+connectToDatabase();
 
 const middlewares = require("./src/middlewares/response.middleware");
 const docsRouter = require("./src/docs/docs");
 const roleRouter = require("./src/api/role/role.router");
 const userRouter = require("./src/api/user/user.router");
-connectToDatabase();
 
 app.use(express.json());
 app.use(middlewares.globalResponseHandler);

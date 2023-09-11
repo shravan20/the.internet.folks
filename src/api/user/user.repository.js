@@ -6,9 +6,10 @@ async function createUser(userData) {
         const user = new User(userData);
         const savedUser = await user.save();
         let data = {
+            id: savedUser.id,
             name: savedUser.name,
             email: savedUser.email,
-            id: savedUser.id,
+            created_at: user.createdAt
         }
         return data;
     } catch (error) {

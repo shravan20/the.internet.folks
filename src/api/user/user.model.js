@@ -8,16 +8,9 @@ const userSchema = new mongoose.Schema({
   email: { type: String, unique: true },
   password: { type: String, select: false }
 }, {
-  timestamp: true,
-  _id: false
+  timestamps: true
 });
 
-userSchema.set('toObject', {
-  transform: function (doc, ret) {
-    ret['id'] = ret._id;
-    delete ret._id;
-  },
-});
 
 userSchema.plugin(mongoosePaginate);
 

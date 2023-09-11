@@ -17,6 +17,7 @@ async function signin(data) {
             id: user._id,
             name: user.name,
             email: user.email,
+            created_at: user.createdAt
         }
 
         return {
@@ -52,6 +53,17 @@ async function signup(data) {
     }
 }
 
+async function getUser(id) {
+    let user = await repository.findOne({ _id: id }, { password: 0 });
+    let response = {
+        id: user._id,
+        name: user.name,
+        email: user.email,
+        created_at: user.createdAt
+    }
+    return response;
+}
+
 async function hashPassword(plainTextPassword) {
     try {
         const saltRounds = 10;
@@ -74,5 +86,6 @@ function jwtGenerator(payload) {
 
 module.exports = {
     signin,
-    signup
+    signup,
+    getUser
 };
