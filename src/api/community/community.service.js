@@ -22,7 +22,37 @@ async function createCommunity(data) {
     }
 }
 
-async function getAllCommunity(data) {
+async function getAllCommunity(uid, query) {
+
+    let pageNo = query.page || 1;
+    let size = query.size || 10;
+    let filter = { owner: uid };
+
+    let communities = await repository.getCommunities(filter, {}, pageNo, size);
+
+    let data = await Promise.all(communities.docs.map(async info => {
+        let user = await userService.getUserById(info.owner)
+        return {
+            "id": info._id,
+            "name": info.name,
+            "slug": info.slug,
+            "owner": {
+                id: info.owner,
+                name: user.name
+            },
+            "createdAt": info.createdAt,
+        }
+    }));
+
+    return {
+        "meta": {
+            "total": communities.totalDocs,
+            "pages": communities.totalPages,
+            "page": communities.page,
+        },
+        "data": data
+    }
+
 
 }
 

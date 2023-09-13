@@ -16,14 +16,18 @@ async function createCommunity(request, response, next) {
 
         response.success(await service.createCommunity(request.body));
     } catch (error) {
-
         response.error(error)
     }
 
 }
 
 async function getAllCommunity(request, response, next) {
-
+    try {
+        console.log("qewqweqweqweqwe")
+        response.success(await service.getAllCommunity(request.uid, request.query));
+    } catch (error) {
+        response.error(error);
+    }
 }
 
 async function getAllMembersByCommunity(request, response, next) {
