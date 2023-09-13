@@ -22,6 +22,18 @@ async function createCommunity(data) {
     }
 }
 
+async function getCommunityById(id) {
+    try {
+        let community = repository.getCommunityById(id);
+        if (community) {
+            throw new BadRequestError("Please Provide a Unique Community Slug");
+        }
+        return community;
+    } catch (error) {
+        throw error;
+    }
+}
+
 async function getAllCommunity(uid, query) {
 
     let pageNo = query.page || 1;
@@ -73,5 +85,6 @@ module.exports = {
     getAllCommunity,
     getAllMembersByCommunity,
     getMyOwnedCommunity,
-    getMyJoinedCommunity
+    getMyJoinedCommunity,
+    getCommunityById
 }

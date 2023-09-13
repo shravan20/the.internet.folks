@@ -1,4 +1,4 @@
-const Role = require('./role.model'); 
+const Role = require('./role.model');
 
 async function createRole(data) {
   try {
@@ -19,7 +19,16 @@ async function getAllRoles() {
   }
 }
 
+async function getRoleById(id) {
+  try {
+    return await Role.findById(id);
+  } catch (error) {
+    throw error;
+  }
+}
+
 module.exports = {
   createRole,
   getAllRoles,
+  getRoleById
 };
