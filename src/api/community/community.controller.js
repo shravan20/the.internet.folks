@@ -1,10 +1,9 @@
 const service = require("./community.service");
 const Validator = require('validatorjs');
-
+const { BadRequestError } = require("../../models/error");
 async function createCommunity(request, response, next) {
     try {
         let rules = {
-            id: 'required|string',
             name: 'required|string|max:128|min:2',
             slug: 'required|string|max:255|min:2',
             owner: 'required|string'
@@ -12,11 +11,12 @@ async function createCommunity(request, response, next) {
 
         let validation = new Validator(request.body, rules);
         if (validation.fails()) {
-            throw new BadRequestError(validation.errors.all());
+            throw new BadRequestError(Object.values(validation.errors.all()).flatMap(i => i));
         }
 
-        response.success({ "test": "test" });
+        response.success(await service.createCommunity(request.body));
     } catch (error) {
+
         response.error(error)
     }
 
@@ -36,4 +36,8 @@ async function getMyOwnedCommunity(request, response, next) {
 
 async function getMyJoinedCommunity(request, response, next) {
 
+}
+
+module.exports = {
+    createCommunity, getAllCommunity, getAllMembersByCommunity, getMyOwnedCommunity, getMyJoinedCommunity
 }

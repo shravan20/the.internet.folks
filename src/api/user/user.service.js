@@ -55,6 +55,7 @@ async function signup(data) {
 
 async function getUser(id) {
     let user = await repository.findOne({ _id: id }, { password: 0 });
+
     let response = {
         id: user._id,
         name: user.name,
@@ -62,6 +63,14 @@ async function getUser(id) {
         created_at: user.createdAt
     }
     return response;
+}
+
+async function getUserById(id) {
+    let user = await repository.findOne({ _id: id }, { password: 0 });
+    if (!user) {
+        throw new BadRequestError("User not found.");
+    }
+    return user;
 }
 
 async function hashPassword(plainTextPassword) {
@@ -87,5 +96,6 @@ function jwtGenerator(payload) {
 module.exports = {
     signin,
     signup,
-    getUser
+    getUser,
+    getUserById
 };
