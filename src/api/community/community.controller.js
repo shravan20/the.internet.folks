@@ -23,7 +23,6 @@ async function createCommunity(request, response, next) {
 
 async function getAllCommunity(request, response, next) {
     try {
-        console.log("qewqweqweqweqwe")
         response.success(await service.getAllCommunity(request.uid, request.query));
     } catch (error) {
         response.error(error);

@@ -1,3 +1,4 @@
+const { query } = require('express');
 const Member = require('./member.model');
 
 async function createMember(memberData) {
@@ -12,6 +13,14 @@ async function createMember(memberData) {
 async function deleteMemberById(memberId) {
     try {
         return await Member.findByIdAndRemove(memberId);
+    } catch (error) {
+        throw error;
+    }
+}
+
+async function deleteMember(query) {
+    try {
+        return await Member.deleteOne(query);
     } catch (error) {
         throw error;
     }
@@ -34,5 +43,5 @@ async function findMembers(query, view) {
 }
 
 module.exports = {
-    createMember, deleteMemberById, findMemberById, findMembers
+    createMember, deleteMemberById, findMemberById, findMembers, deleteMember
 };
