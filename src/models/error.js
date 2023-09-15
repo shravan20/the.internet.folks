@@ -1,6 +1,5 @@
 class CustomError extends Error {
   constructor(message, statusCode) {
-    // super(message);
     if (Array.isArray(message)) {
       super(message.join('\n'));
       this.message = message;
@@ -15,25 +14,31 @@ class CustomError extends Error {
 
 class NotFoundError extends CustomError {
   constructor(message) {
-    super(message || "Not Found", 404);
+    super(message || "RESOURCE_NOT_FOUND", 404);
   }
 }
 
 class UnauthorizedError extends CustomError {
   constructor(message) {
-    super(message || "Unauthorized", 401);
+    super(message || "UNAUTHORIZED", 401);
   }
 }
 
 class DataAlreadyExists extends CustomError {
   constructor(message) {
-    super(message || "Data Already Exists", 409);
+    super(message || "DATA_ALREADY_EXISTS", 409);
   }
 }
 
 class BadRequestError extends CustomError {
   constructor(message) {
-    super(message || "BadRequest", 400);
+    super(message || "BAD_REQUEST", 400);
+  }
+}
+
+class NotAllowedAccess extends CustomError {
+  constructor(message) {
+    super(message || "NOT_ALLOWED_ACCESS", 400);
   }
 }
 
@@ -43,5 +48,6 @@ module.exports = {
   DataAlreadyExists,
   NotFoundError,
   UnauthorizedError,
-  BadRequestError
+  BadRequestError,
+  NotAllowedAccess
 };

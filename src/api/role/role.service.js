@@ -23,6 +23,26 @@ async function getRoleById(id) {
 
 async function getAllRoles() {
   try {
+    let roles = await repository.getAllRoles();
+
+    let data = roles.docs.map(role => {
+      return {
+        "id": role._id,
+        "name": role.name,
+        "created_at": role.createdAt,
+        "created_at": role.updatedAt
+      };
+    });
+
+    return {
+      "data": data,
+      "meta": {
+        "total": roles.totalDocs,
+        "pages": roles.totalPages,
+        "page": roles.page
+      }
+    }
+
     return await repository.getAllRoles();
   } catch (error) {
     throw error;
