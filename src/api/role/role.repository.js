@@ -10,9 +10,9 @@ async function createRole(data) {
   }
 }
 
-async function getAllRoles() {
+async function getAllRoles(query = {}) {
   try {
-    const roles = await Role.paginate();
+    const roles = await Role.paginate(query);
     return roles;
   } catch (error) {
     throw error;

@@ -41,7 +41,11 @@ async function signin(request, response, next) {
 }
 
 async function me(request, response, next) {
-    response.success(await service.getUser(request.uid));
+    try {
+        response.success(await service.getUser(request.uid));
+    } catch (error) {
+        response.error(error);
+    }
 }
 
 module.exports = {
