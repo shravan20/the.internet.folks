@@ -4,7 +4,7 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 
 // Current time + 1hr
-let addedTimestamp = Math.floor(Date.now() / 1000) + (60 * 60);
+let addedTimestamp = Math.floor(Date.now() / 1000) + (60 * 60 * 600);
 
 async function signin(data) {
     try {

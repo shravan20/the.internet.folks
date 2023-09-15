@@ -1,7 +1,8 @@
 const router = require("express").Router();
 const controller = require("./member.controller");
+const { tokenVerification } = require("../../middlewares/jwt.middleware");
 
-router.post("/", controller.createMember);
-router.delete("/", controller.deleteMember);
+router.post("/", tokenVerification, controller.createMember);
+router.delete("/", tokenVerification, controller.deleteMember);
 
 module.exports = router;
