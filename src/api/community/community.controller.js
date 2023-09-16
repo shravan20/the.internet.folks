@@ -30,7 +30,11 @@ async function getAllCommunity(request, response, next) {
 }
 
 async function getAllMembersByCommunity(request, response, next) {
-
+    try {
+        response.success(await service.getAllMembersByCommunity());
+    } catch (error) {
+        response.error(error);
+    }
 }
 
 async function getMyOwnedCommunity(request, response, next) {

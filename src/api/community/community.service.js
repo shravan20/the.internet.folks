@@ -1,6 +1,6 @@
 const repository = require("./community.repository");
 const userService = require("../user/user.service");
-const { BadRequestError } = require("../../models/error");
+const { BadRequestError, NotFoundError } = require("../../models/error");
 
 async function createCommunity(data) {
     try {
@@ -26,7 +26,7 @@ async function getCommunityById(id) {
     try {
         let community = repository.getCommunityById(id);
         if (community) {
-            throw new BadRequestError("Please Provide a Unique Community Slug");
+            throw new NotFoundError("Community doesnt exist with " + communityId);
         }
         return community;
     } catch (error) {
@@ -68,8 +68,18 @@ async function getAllCommunity(uid, query) {
 
 }
 
-async function getAllMembersByCommunity(data) {
+async function getAllMembersByCommunity(communityId, userId) {
+    try {
+        let community = await repository.findOne({ community: communityId });
 
+        if (!community) {
+            throw new BadRequestError("Please Provide a Unique Community Slug");
+        }
+
+        let members = repository.getAllMembersByCommunity({ community: communityId });
+    } catch (error) {
+
+    }
 }
 
 async function getMyOwnedCommunity(data) {
