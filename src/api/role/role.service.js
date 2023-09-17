@@ -12,7 +12,7 @@ async function getRoleById(id) {
   try {
     let role = await repository.getRoleById(id);
     if (!role) {
-      throw new BadRequestError("User not found.");
+      throw new BadRequestError("Role not found.");
     }
     return role;
   } catch (error) {

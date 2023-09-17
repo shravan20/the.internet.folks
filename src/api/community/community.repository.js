@@ -1,5 +1,5 @@
 const Community = require("./community.model");
-
+const { NotFoundError } = require("../../models/error");
 
 async function createCommunity(data) {
     try {
@@ -10,17 +10,21 @@ async function createCommunity(data) {
     }
 }
 
-async function getCommunityById(id) {
+async function getCommunityById(id, validate = false) {
     try {
-        return await Community.findById(id);
+        let community = await Community.findById(id);
+        if (!community && validate) {
+            throw new NotFoundError(`Community doesnt exist with ${id}`);
+        }
+        return community;
     } catch (error) {
         throw error;
     }
 }
 
-async function findOne(view, filter) {
+async function findOne(filter, view) {
     try {
-        return await Community.findOne(view, filter);
+        return await Community.findOne(filter, view);
     } catch (error) {
         throw error;
     }

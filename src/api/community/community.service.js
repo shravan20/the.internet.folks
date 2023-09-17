@@ -1,20 +1,39 @@
 const repository = require("./community.repository");
 const userService = require("../user/user.service");
 const { BadRequestError, NotFoundError } = require("../../models/error");
+const memberService = require("../member/member.service");
+const roleRepository = require("../role/role.repository");
 
 async function createCommunity(data) {
     try {
         let creator = data["owner"];
-        creator = userService.getUserById(creator);
+        creator = await userService.getUserById(creator);
 
         let community = await repository.findOne({ slug: data['slug'] });
 
         if (community) {
             throw new BadRequestError("Please Provide a Unique Community Slug");
         }
-        community = repository.createCommunity(data);
+
+        community = await repository.createCommunity(data);
         data.id = community._id;
         data.createdAt = community.createdAt;
+
+        let searchString = "admin";
+        let role = await roleRepository.findOne({
+            name: { $regex: new RegExp(`\\b${searchString}\\b`, 'i') }
+        });
+
+        if (!role) {
+            throw new NotFoundError("Add a Community Admin & Member role in role entity");
+        }
+
+        await memberService.createMember({
+            user: creator._id,
+            community: community._id,
+            role: role._id
+        }, creator, false);
+
         return data;
 
     } catch (error) {
@@ -25,8 +44,8 @@ async function createCommunity(data) {
 async function getCommunityById(id) {
     try {
         let community = repository.getCommunityById(id);
-        if (community) {
-            throw new NotFoundError("Community doesnt exist with " + communityId);
+        if (!community) {
+            throw new NotFoundError(`Community doesnt exist with ${id}`);
         }
         return community;
     } catch (error) {
@@ -68,17 +87,18 @@ async function getAllCommunity(uid, query) {
 
 }
 
-async function getAllMembersByCommunity(communityId, userId) {
+async function getAllMembersByCommunity(communityId, userId, page, size) {
     try {
-        let community = await repository.findOne({ community: communityId });
+        let community = await repository.findOne({ _id: communityId });
 
         if (!community) {
-            throw new BadRequestError("Please Provide a Unique Community Slug");
+            throw new BadRequestError("Community not found");
         }
 
-        let members = repository.getAllMembersByCommunity({ community: communityId });
+        let members = memberService.getAllMembersByCommunity(communityId, page, size);
+        return members;
     } catch (error) {
-
+        throw error;
     }
 }
 

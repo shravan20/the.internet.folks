@@ -31,7 +31,9 @@ async function getAllCommunity(request, response, next) {
 
 async function getAllMembersByCommunity(request, response, next) {
     try {
-        response.success(await service.getAllMembersByCommunity());
+        let page = request.query.page || 1;
+        let size = request.query.size || 10;
+        response.success(await service.getAllMembersByCommunity(request.params.id, request.uid, page, size));
     } catch (error) {
         response.error(error);
     }

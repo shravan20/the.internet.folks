@@ -10,6 +10,7 @@ async function createMember(memberData) {
     }
 }
 
+
 async function deleteMemberById(memberId) {
     try {
         return await Member.findByIdAndRemove(memberId);
@@ -42,6 +43,27 @@ async function findMembers(query, view) {
     }
 }
 
+async function findAll(query, view, page, size) {
+    try {
+        let options = {
+            page: page || 1,
+            limit: size || 10,
+            select: view
+        };
+        return await Member.paginate(query, options);
+    } catch (error) {
+        throw error;
+    }
+}
+
+async function findOne(query) {
+    try {
+        return await Member.findOne(query);
+    } catch (error) {
+        throw error;
+    }
+}
+
 module.exports = {
-    createMember, deleteMemberById, findMemberById, findMembers, deleteMember
+    createMember, deleteMemberById, findMemberById, findMembers, deleteMember, findAll, findOne
 };

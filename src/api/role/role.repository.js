@@ -27,8 +27,17 @@ async function getRoleById(id) {
   }
 }
 
+async function findOne(filter, view) {
+  try {
+    return await Role.findOne(filter, view);
+  } catch (error) {
+    throw error;
+  }
+}
+
 module.exports = {
   createRole,
   getAllRoles,
-  getRoleById
+  getRoleById,
+  findOne
 };
