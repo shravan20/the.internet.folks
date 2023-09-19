@@ -1,0 +1,372 @@
+{
+	"info": {
+		"_postman_id": "7e1735a3-6a9b-4ab9-b3e6-85e6213e218d",
+		"name": "TIF",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "18129057"
+	},
+	"item": [
+		{
+			"name": "Signup",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\":\"shravan\",\n    \"email\":\"shravan@shravan.com\",\n    \"password\":\"shravan\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:4000/v1/auth/signup",
+					"host": [
+						"localhost"
+					],
+					"port": "4000",
+					"path": [
+						"v1",
+						"auth",
+						"signup"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "signin",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"email\":\"shravan@shravan.com\",\n    \"password\":\"shravan\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:4000/v1/auth/signin",
+					"host": [
+						"localhost"
+					],
+					"port": "4000",
+					"path": [
+						"v1",
+						"auth",
+						"signin"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "me",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjoiNzEwODQ2Mzk1MDE0NDI0ODkxMiIsImV4cCI6MTY5NDgwMzA1OCwiaWF0IjoxNjk0Nzk5NDcyfQ.FYE3kfqmBqDwexb66SeAUN1Etz1I9gXmm_zmMRaNZtY",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:4000/v1/auth/me",
+					"host": [
+						"localhost"
+					],
+					"port": "4000",
+					"path": [
+						"v1",
+						"auth",
+						"me"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "create community",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjoiNzEwODQ2Mzk1MDE0NDI0ODkxMiIsImV4cCI6MTY5NzEwOTE4NiwiaWF0IjoxNjk0OTQ5MjgyfQ.ImMV4No4WFyf_dz9kKbGXHEyl3_rdcDKdtnKRfI830w",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\": \"Community-3\",\n    \"slug\": \"East or West Comunnity-3 is the best\",\n    \"owner\": \"7108463950144248912\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:4000/v1/community",
+					"host": [
+						"localhost"
+					],
+					"port": "4000",
+					"path": [
+						"v1",
+						"community"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Alll Communities",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjoiNzEwNzAwODY2NDU1NTkyMjEwNSIsImV4cCI6MTY5NDYzNTg0NSwiaWF0IjoxNjk0NjMyMjU1fQ.kvuNuZfipOWLZVJhYAkKAkhpY8pIs1ULHmOZelVvEuU",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:4000/v1/community",
+					"host": [
+						"localhost"
+					],
+					"port": "4000",
+					"path": [
+						"v1",
+						"community"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "create member",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjoiNzEwODQ2Mzk1MDE0NDI0ODkxMiIsImV4cCI6MTY5NzA4OTc2OCwiaWF0IjoxNjk0OTI5ODAzfQ.uOKozc1mjqmqQRfda9iYiaoe98xJlS1inq2P3Rmbmlo",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"community\": \"7108510029087955329\",\n    \"user\": \"7108464061755561421\",\n    \"role\": \"7109039879816745362\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:4000/v1/member",
+					"host": [
+						"localhost"
+					],
+					"port": "4000",
+					"path": [
+						"v1",
+						"member"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "create role",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjoiNzEwODQ2Mzk1MDE0NDI0ODkxMiIsImV4cCI6MTY5NzA4NzE2OCwiaWF0IjoxNjk0OTI3MTc0fQ.mHOo64-VLSRAIJQ7pj0MrCQ7JW1cZZlU2ttSoOXKK2Y",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\": \"General Member\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:4000/v1/role/",
+					"host": [
+						"localhost"
+					],
+					"port": "4000",
+					"path": [
+						"v1",
+						"role",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get all roles",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjoiNzEwODQ2Mzk1MDE0NDI0ODkxMiIsImV4cCI6MTY5NDc5Nzc4MywiaWF0IjoxNjk0Nzk0MjI2fQ.rO14H6mqZQLPh21EGDsssuDcK2H9eOz120O2ys9LLoQ",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:4000/v1/role",
+					"host": [
+						"localhost"
+					],
+					"port": "4000",
+					"path": [
+						"v1",
+						"role"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get all community members",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjoiNzEwODQ2Mzk1MDE0NDI0ODkxMiIsImV4cCI6MTY5NzA5MjY4MSwiaWF0IjoxNjk0OTMyNzA5fQ.z5Wc5Wwzr0STn7dkmjAVmHTA_VKUZBnG_d2S8NXJlQE",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n     \"community\": \"7108510029087955329\",\n    \"user\": \"7108464061755561421\",\n    \"role\": \"7109039879816745362\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:4000/v1/community/:id/members",
+					"host": [
+						"localhost"
+					],
+					"port": "4000",
+					"path": [
+						"v1",
+						"community",
+						":id",
+						"members"
+					],
+					"variable": [
+						{
+							"key": "id",
+							"value": "7108510029087955329"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "owned communities",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:4000/v1/community/me/owner",
+					"host": [
+						"localhost"
+					],
+					"port": "4000",
+					"path": [
+						"v1",
+						"community",
+						"me",
+						"owner"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "joined communities",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjoiNzEwODQ2NDA2MTc1NTU2MTQyMSIsImV4cCI6MTY5NzI5MTQzMCwiaWF0IjoxNjk1MTMxNDcwfQ.8QJeO8AVKd4doAvzGjXOOjIE20nFVVcPHwnAoPVLs00",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:4000/v1/community/me/member",
+					"host": [
+						"localhost"
+					],
+					"port": "4000",
+					"path": [
+						"v1",
+						"community",
+						"me",
+						"member"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
