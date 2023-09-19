@@ -71,8 +71,17 @@ async function getAllMembersByCommunity(id, page, size) {
     }
 }
 
+async function getAll(filter, view, page, size) {
+    try {
+        return await repository.findAll(filter, view, page, size);
+    } catch (error) {
+        throw error;
+    }
+}
+
 module.exports = {
     createMember,
     deleteMember,
-    getAllMembersByCommunity
+    getAllMembersByCommunity,
+    getAll
 }

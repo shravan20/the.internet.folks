@@ -45,12 +45,18 @@ async function getMyOwnedCommunity(request, response, next) {
         let size = request.query.size || 10;
         response.success(await service.getMyOwnedCommunity(request.uid, page, size));
     } catch (error) {
-        
+        response.error(error);
     }
 }
 
 async function getMyJoinedCommunity(request, response, next) {
-
+    try {
+        let page = request.query.page || 1;
+        let size = request.query.size || 10;
+        response.success(await service.getMyJoinedCommunity(request.uid, page, size));
+    } catch (error) {
+        response.error(error);
+    }
 }
 
 module.exports = {

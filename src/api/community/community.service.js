@@ -152,12 +152,47 @@ async function getMyOwnedCommunity(userId, page, size) {
         }
 
     } catch (error) {
-
+        throw error;
     }
 }
 
-async function getMyJoinedCommunity(data) {
+async function getMyJoinedCommunity(userId, page, size) {
+    try {
+        /**
+         * Refactor this code to use lookups
+         */
+        let response = await memberService.getAll({
+            "member": userId
+        }, {}, 1, 100000);
 
+        let communities = response.docs.map(member => member.community);
+        let filter = {
+            "_id": { $all: [...communities] }
+        }
+
+        let data = await repository.getCommunities(filter, {}, page, size);
+
+        return {
+            "data": data.docs.map(community => {
+                return {
+                    "id": community._id,
+                    "name": community.name,
+                    "slug": community.slug,
+                    "owner": community.owner,
+                    "created_at": community.createdAt,
+                    "updated_at": community.updatedAt
+                }
+            }),
+            "meta": {
+                "total": data.totalDocs,
+                "pages": data.totalPages,
+                "page": data.page
+            }
+        }
+
+    } catch (error) {
+        throw error;
+    }
 }
 
 module.exports = {
