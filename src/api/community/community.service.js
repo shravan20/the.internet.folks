@@ -95,8 +95,33 @@ async function getAllMembersByCommunity(communityId, userId, page, size) {
             throw new BadRequestError("Community not found");
         }
 
-        let members = memberService.getAllMembersByCommunity(communityId, page, size);
-        return members;
+        let members = await memberService.getAllMembersByCommunity(communityId, page, size);
+        let response = await Promise.all(members.docs.map(async (member) => {
+
+            let user = await userService.getUserById(member.user);
+            let role = await roleRepository.getRoleById(member.role);
+            return {
+                "id": member.id,
+                "community": member.community,
+                "user": {
+                    "id": user._id,
+                    "name": user.name,
+                },
+                "role": {
+                    "id": role._id,
+                    "name": role.name,
+                }
+            }
+        }));
+
+        return {
+            "data": response,
+            "meta": {
+                "total": members.totalDocs,
+                "pages": members.totalPages,
+                "page": members.page
+            }
+        };
     } catch (error) {
         throw error;
     }
