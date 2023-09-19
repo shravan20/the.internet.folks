@@ -127,8 +127,33 @@ async function getAllMembersByCommunity(communityId, userId, page, size) {
     }
 }
 
-async function getMyOwnedCommunity(data) {
+async function getMyOwnedCommunity(userId, page, size) {
+    try {
+        let response = await repository.getCommunities({
+            "owner": userId
+        }, page, size);
 
+        return {
+            "data": response.docs.map(community => {
+                return {
+                    "id": community._id,
+                    "name": community.name,
+                    "slug": community.slug,
+                    "owner": community.owner,
+                    "created_at": community.createdAt,
+                    "updated_at": community.updatedAt
+                }
+            }),
+            "meta": {
+                "total": response.totalDocs,
+                "pages": response.totalPages,
+                "page": response.page
+            }
+        }
+
+    } catch (error) {
+
+    }
 }
 
 async function getMyJoinedCommunity(data) {
